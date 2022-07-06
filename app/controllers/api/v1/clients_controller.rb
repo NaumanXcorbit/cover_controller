@@ -1,4 +1,5 @@
 class Api::V1::ClientsController < ApplicationController
+  http_basic_authenticate_with name: "admin", password: "1122"
   skip_before_action :verify_authenticity_token
   def index
     @clients = Client.all
