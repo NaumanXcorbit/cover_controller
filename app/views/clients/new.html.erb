@@ -1,2 +1,21 @@
 <h1>Clients#new</h1>
 <p>Find me in app/views/clients/new.html.erb</p>
+<%= form_with model: @client do |f| %>
+  <div>
+    <%= f.label :name %> <br>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :email %> <br>
+    <%= f.text_field :email %>
+  </div>
+  <div>
+    <%= f.label :status %> <br>
+    <%= f.text_field :status %>
+  </div>
+
+  <div>
+    <br>
+    <%= f.submit %>
+  </div>
+<% end %>
