@@ -1,4 +1,9 @@
+require 'digest/md5'
 class ClientsController < ApplicationController
+  REALM = "SuperSecret"
+  USERS = {"dhh" => "secret",
+           "dap" => Digest::MD5.hexdigest(["dap",REALM,"secret"].join(":"))}
+  before_action :authenticate_client
   def index
     @clients = Client.all
     respond_to do |format|
@@ -29,6 +34,12 @@ class ClientsController < ApplicationController
 
   def student_params
     params.require(:client).permit(:name, :email, :status)
+  end
+
+  def authenticate_client
+    authenticate_or_request_with_http_digest(REALM) do |username|
+      USERS[username]
+      end
   end
 
 end
