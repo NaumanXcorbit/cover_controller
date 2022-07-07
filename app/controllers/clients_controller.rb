@@ -30,6 +30,10 @@ class ClientsController < ApplicationController
     @client = Client.find(params[:id])
   end
 
+  def download
+    send_file(Rails.root.join('app' , 'assets', 'images', 'image.jpeg'))
+  end
+
   private
 
   def student_params
