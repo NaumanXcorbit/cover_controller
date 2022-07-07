@@ -2,8 +2,8 @@ class Api::V1::ClientsController < ApplicationController
   http_basic_authenticate_with name: "admin", password: "1122"
   skip_before_action :verify_authenticity_token
   def index
-    @clients = Client.all
-    render json: @clients, status: 200
+    @clients = Client.includes(:projects).all
+    render :'api/v1/clients/index', status: 200
   end
 
   def create
@@ -26,6 +26,9 @@ class Api::V1::ClientsController < ApplicationController
 
   private
   def client_params
-    params.permit(:name, :email, :status)
+    params.require(:client).permit(
+    :name, :email, :status, projects_attributes: [:name, :about]
+    )
+    # params.permit(:name, :email, :status, projects_attributes: [:name, :about])
   end
 end
